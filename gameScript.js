@@ -15,6 +15,14 @@ const flappyBird = {
   dy: 50,
   dWidth: 34,
   dHeight: 24,
+  falldownSpeed: 0,
+  gravity: 0.25,
+
+  refresh() {
+    flappyBird.falldownSpeed = flappyBird.falldownSpeed + flappyBird.gravity
+    flappyBird.dy = flappyBird.dy + flappyBird.falldownSpeed
+    console.log(flappyBird.falldownSpeed)
+  },
 
   print() {
     contexto.drawImage(
@@ -111,11 +119,11 @@ const background = {
 }
 
 function loop() {
+  flappyBird.refresh()
+
   background.print()
   floor.print()
   flappyBird.print()
-
-  flappyBird.dy = flappyBird.dy
 
   requestAnimationFrame(loop)
 }
