@@ -6,6 +6,8 @@ sprites.src = './assets/sprites.png'
 const canvas = document.querySelector('canvas')
 const contexto = canvas.getContext('2d')
 
+// bird
+
 const flappyBird = {
   sx: 0,
   sy: 0,
@@ -118,13 +120,76 @@ const background = {
   }
 }
 
+//start msg
+
+const mensageGetReady = {
+  sx: 134,
+  sy: 0,
+  sWidth: 174,
+  sHeight: 152,
+  dx: canvas.width / 2 - 174 / 2,
+  dy: 50,
+  dWidth: 174,
+  dHeight: 152,
+
+  print() {
+    contexto.drawImage(
+      sprites,
+      mensageGetReady.sx,
+      mensageGetReady.sy,
+      mensageGetReady.sWidth,
+      mensageGetReady.sHeight,
+      mensageGetReady.dx,
+      mensageGetReady.dy,
+      mensageGetReady.dWidth,
+      mensageGetReady.dHeight
+    )
+  }
+}
+
+//screens
+let activeScreen = {}
+
+function screenChange(newScreen) {
+  activeScreen = newScreen
+}
+
+const screens = {
+  startScreen: {
+    print() {
+      background.print()
+      floor.print()
+      flappyBird.print()
+      mensageGetReady.print()
+    },
+    click() {
+      screenChange(screens.game)
+    },
+    refresh() {}
+  }
+}
+screens.game = {
+  print() {
+    background.print()
+    floor.print()
+    flappyBird.print()
+  },
+  refresh() {
+    flappyBird.refresh()
+  }
+}
+
 function loop() {
-  flappyBird.refresh()
-
-  background.print()
-  floor.print()
-  flappyBird.print()
-
+  activeScreen.print()
+  activeScreen.refresh()
   requestAnimationFrame(loop)
 }
+
+window.addEventListener('click', function () {
+  if (activeScreen.click) {
+    activeScreen.click()
+  }
+})
+
+screenChange(screens.startScreen)
 loop()
