@@ -51,41 +51,49 @@ const background = {
 }
 
 // floor (chão)
+function createFloor() {
+  const floor = {
+    sx: 0,
+    sy: 610,
+    sWidth: 224,
+    sHeight: 112,
+    dx: 0,
+    dy: canvas.height - 112,
+    dWidth: 224,
+    dHeight: 112,
+    refresh() {
+      const floorMove = 1
+      const repeatAt = floor.sWidth / 2
+      const floorMovement = floor.dx - floorMove
 
-const floor = {
-  sx: 0,
-  sy: 610,
-  sWidth: 224,
-  sHeight: 112,
-  dx: 0,
-  dy: canvas.height - 112,
-  dWidth: 224,
-  dHeight: 112,
-
-  print() {
-    contexto.drawImage(
-      sprites,
-      floor.sx,
-      floor.sy,
-      floor.sWidth,
-      floor.sHeight,
-      floor.dx,
-      floor.dy,
-      floor.dWidth,
-      floor.dHeight
-    )
-    contexto.drawImage(
-      sprites,
-      floor.sx,
-      floor.sy,
-      floor.sWidth,
-      floor.sHeight,
-      floor.dx + floor.sWidth,
-      floor.dy,
-      floor.dWidth,
-      floor.dHeight
-    )
+      floor.dx = floorMovement % repeatAt
+    },
+    print() {
+      contexto.drawImage(
+        sprites,
+        floor.sx,
+        floor.sy,
+        floor.sWidth,
+        floor.sHeight,
+        floor.dx,
+        floor.dy,
+        floor.dWidth,
+        floor.dHeight
+      )
+      contexto.drawImage(
+        sprites,
+        floor.sx,
+        floor.sy,
+        floor.sWidth,
+        floor.sHeight,
+        floor.dx + floor.sWidth,
+        floor.dy,
+        floor.dWidth,
+        floor.dHeight
+      )
+    }
   }
+  return floor
 }
 
 //start msg
@@ -134,7 +142,7 @@ function createFlappyBird() {
     },
 
     refresh() {
-      if (doCollision(flappyBird, floor)) {
+      if (doCollision(flappyBird, global.floor)) {
         console.log('hit')
         sound_hit.play()
 
@@ -147,12 +155,18 @@ function createFlappyBird() {
       flappyBird.falldownSpeed = flappyBird.falldownSpeed + flappyBird.gravity
       flappyBird.dy = flappyBird.dy + flappyBird.falldownSpeed
     },
+    movements: [
+      { spriteX: 0, spriteY: 0 }, // first image
+      { spriteX: 0, spriteY: 26 }, // second image
+      { spriteX: 0, spriteY: 52 } // third image
+    ],
 
     print() {
+      const { spriteX, spriteY } = flappyBird.movements[0]
       contexto.drawImage(
         sprites,
-        flappyBird.sx,
-        flappyBird.sy,
+        spriteX,
+        spriteY,
         flappyBird.sWidth,
         flappyBird.sHeight,
         flappyBird.dx,
@@ -192,23 +206,26 @@ const screens = {
   startScreen: {
     ini() {
       global.flappyBird = createFlappyBird()
+      global.floor = createFloor()
     },
     print() {
       background.print()
-      floor.print()
+      global.floor.print()
       global.flappyBird.print()
       mensageGetReady.print()
     },
     click() {
       screenChange(screens.game)
     },
-    refresh() {}
+    refresh() {
+      global.floor.refresh()
+    }
   }
 }
 screens.game = {
   print() {
     background.print()
-    floor.print()
+    global.floor.print()
     global.flappyBird.print()
   },
   click() {
@@ -216,6 +233,7 @@ screens.game = {
   },
   refresh() {
     global.flappyBird.refresh()
+    global.floor.refresh()
   }
 }
 
