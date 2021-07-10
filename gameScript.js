@@ -1,5 +1,6 @@
 console.log('Flappy Bird - Vinicius')
 
+let frames = 0
 const sound_hit = new Audio()
 sound_hit.src = './assets/sound_efects/hit.wav'
 
@@ -158,11 +159,22 @@ function createFlappyBird() {
     movements: [
       { spriteX: 0, spriteY: 0 }, // first image
       { spriteX: 0, spriteY: 26 }, // second image
-      { spriteX: 0, spriteY: 52 } // third image
+      { spriteX: 0, spriteY: 52 }, // third image
+      { spriteX: 0, spriteY: 26 } // second image
     ],
-
+    actualFrame: 0,
+    refreshActualFrame() {
+      const framesInterval = 10
+      if (frames % framesInterval === 0) {
+        const baseIncrement = 1
+        const increment = baseIncrement + flappyBird.actualFrame
+        const baseRepeat = flappyBird.movements.length
+        flappyBird.actualFrame = increment % baseRepeat
+      }
+    },
     print() {
-      const { spriteX, spriteY } = flappyBird.movements[0]
+      flappyBird.refreshActualFrame()
+      const { spriteX, spriteY } = flappyBird.movements[flappyBird.actualFrame]
       contexto.drawImage(
         sprites,
         spriteX,
@@ -240,6 +252,8 @@ screens.game = {
 function loop() {
   activeScreen.print()
   activeScreen.refresh()
+
+  frames = frames + 1
   requestAnimationFrame(loop)
 }
 
