@@ -11,8 +11,8 @@ The game Flappy bird using JavaScript. </p>
 
 
 <h1 align="center" >🔧 Technologies & Tools</h1>
-<div><h1 align="center"> 
-<div align= "center"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40" align = "center"/> <a href="https://www.w3schools.com/css/" target="_blank" align = "center"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/></a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a>  
+
+<div align= "center"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> <a href="https://www.w3schools.com/css/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/></a>  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/></a>  
 
 <h1 align="center" ><img src="https://github.com/viniciussoares7/FlappyBird/blob/main/assets/images/game-screen-1.jpg" alt="game-screen-1"  width="300px" height="auto"/></h1> <br>
 
