@@ -113,7 +113,7 @@ function createPipes() {
     collisionFlappyBird(even) {
       const headFlappyBird = global.flappyBird.dy
       const footFlappyBird = global.flappyBird.dy + global.flappyBird.sHeight
-      if (global.flappyBird.dx >= even.x) {
+      if (global.flappyBird.dx + global.flappyBird.sWidth >= even.x) {
         if (headFlappyBird <= even.pipesSky.y) {
           return true
         }
@@ -138,7 +138,8 @@ function createPipes() {
 
         if (pipes.collisionFlappyBird(even)) {
           console.log('You lose!')
-          screenChange(screens.startScreen)
+          sound_hit.play()
+          screenChange(screens.gameOver)
         }
 
         if (even.x + pipes.sWidth <= 0) {
@@ -222,6 +223,30 @@ const mensageGetReady = {
     )
   }
 }
+const mensageGameOver = {
+  sx: 134,
+  sy: 153,
+  sWidth: 226,
+  sHeight: 200,
+  dx: canvas.width / 2 - 226 / 2,
+  dy: 50,
+  dWidth: 226,
+  dHeight: 200,
+
+  print() {
+    contexto.drawImage(
+      sprites,
+      mensageGameOver.sx,
+      mensageGameOver.sy,
+      mensageGameOver.sWidth,
+      mensageGameOver.sHeight,
+      mensageGameOver.dx,
+      mensageGameOver.dy,
+      mensageGameOver.dWidth,
+      mensageGameOver.dHeight
+    )
+  }
+}
 
 // bird
 function createFlappyBird() {
@@ -246,9 +271,8 @@ function createFlappyBird() {
         console.log('hit')
         sound_hit.play()
 
-        setTimeout(() => {
-          screenChange(screens.startScreen)
-        }, 300)
+        screenChange(screens.gameOver)
+
         return
       }
 
@@ -288,6 +312,28 @@ function createFlappyBird() {
     }
   }
   return flappyBird
+}
+
+//scoreboard
+function createScoreboard() {
+  const scoreboard = {
+    score: 0,
+    print() {
+      contexto.font = '25px "VT323"'
+      contexto.fillStyle = 'Black'
+      contexto.textAlign = 'right'
+      contexto.fillText(`score: ${scoreboard.score}`, canvas.width - 10, 440)
+    },
+    refresh() {
+      const framesInterval = 10
+      const passedInterval = frames % framesInterval === 0
+
+      if (passedInterval) {
+        scoreboard.score = scoreboard.score + 1
+      }
+    }
+  }
+  return scoreboard
 }
 
 function doCollision(flappyBird, floor) {
@@ -338,11 +384,15 @@ const screens = {
   }
 }
 screens.game = {
+  ini() {
+    global.scoreboard = createScoreboard()
+  },
   print() {
     background.print()
     global.pipes.print()
     global.floor.print()
     global.flappyBird.print()
+    global.scoreboard.print()
   },
   click() {
     global.flappyBird.action()
@@ -351,6 +401,17 @@ screens.game = {
     global.pipes.refresh()
     global.flappyBird.refresh()
     global.floor.refresh()
+    global.scoreboard.refresh()
+  }
+}
+
+screens.gameOver = {
+  print() {
+    mensageGameOver.print()
+  },
+  refresh() {},
+  click() {
+    screenChange(screens.startScreen)
   }
 }
 
