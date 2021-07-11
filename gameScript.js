@@ -100,7 +100,28 @@ function createPipes() {
           pipes.sWidth,
           pipes.sHeight
         )
+        even.pipesSky = {
+          x: pipesSkyX,
+          y: pipes.sHeight + pipesSkyY
+        }
+        even.pipesFloor = {
+          x: pipesFloorX,
+          y: pipesFloorY
+        }
       })
+    },
+    collisionFlappyBird(even) {
+      const headFlappyBird = global.flappyBird.dy
+      const footFlappyBird = global.flappyBird.dy + global.flappyBird.sHeight
+      if (global.flappyBird.dx >= even.x) {
+        if (headFlappyBird <= even.pipesSky.y) {
+          return true
+        }
+        if (footFlappyBird >= even.pipesFloor.y) {
+          return true
+        }
+      }
+      return false
     },
     even: [{}],
     refresh() {
@@ -114,6 +135,11 @@ function createPipes() {
 
       pipes.even.forEach(function (even) {
         even.x = even.x - 2
+
+        if (pipes.collisionFlappyBird(even)) {
+          console.log('You lose!')
+          screenChange(screens.startScreen)
+        }
 
         if (even.x + pipes.sWidth <= 0) {
           pipes.even.shift()
@@ -300,7 +326,7 @@ const screens = {
       global.floor.print()
       global.flappyBird.print()
 
-      //mensageGetReady.print()
+      mensageGetReady.print()
     },
     click() {
       screenChange(screens.game)
@@ -308,7 +334,6 @@ const screens = {
 
     refresh() {
       global.floor.refresh()
-      global.pipes.refresh()
     }
   }
 }
