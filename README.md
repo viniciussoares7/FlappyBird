@@ -1,4 +1,4 @@
-<h1 align="center" ><img src="image" alt="header" style="zoom:50%;" width="700px" height="auto"/></h1>
+<h1 align="center" ><img src="https://github.com/viniciussoares7/FlappyBird/blob/main/assets/images/header.png" alt="header"  width="400px" height="auto"/></h1>
 
 <div><h1 align="center"> 
 # Flappy Bird - JavaScript <img >
