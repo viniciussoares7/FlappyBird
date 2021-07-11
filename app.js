@@ -4,6 +4,9 @@ let frames = 0
 const sound_hit = new Audio()
 sound_hit.src = './assets/sound_efects/hit.wav'
 
+const sound_jump = new Audio()
+sound_jump.src = './assets/sound_efects/jump.wav'
+
 const sprites = new Image()
 sprites.src = './assets/images/sprites.png'
 
@@ -310,6 +313,7 @@ function createFlappyBird() {
     jump: 4.6,
     action() {
       flappyBird.falldownSpeed = -flappyBird.jump
+      sound_jump.play()
     },
 
     refresh() {
