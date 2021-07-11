@@ -51,6 +51,79 @@ const background = {
   }
 }
 
+function createPipes() {
+  const pipes = {
+    sWidth: 52,
+    sHeight: 400,
+
+    floor: {
+      sx: 0,
+      sy: 169
+    },
+    sky: {
+      sx: 52,
+      sy: 169
+    },
+    space: 80,
+
+    print() {
+      pipes.even.forEach(function (even) {
+        const yRandom = even.y
+        const spacePipes = 90
+
+        const pipesSkyX = even.x
+        const pipesSkyY = yRandom
+        // Sky's pipe
+        contexto.drawImage(
+          sprites,
+          pipes.sky.sx,
+          pipes.sky.sy,
+          pipes.sWidth,
+          pipes.sHeight,
+          pipesSkyX,
+          pipesSkyY,
+          pipes.sWidth,
+          pipes.sHeight
+        )
+
+        // Floor's pipe
+        const pipesFloorX = even.x
+        const pipesFloorY = pipes.sHeight + spacePipes + yRandom
+        contexto.drawImage(
+          sprites,
+          pipes.floor.sx,
+          pipes.floor.sy,
+          pipes.sWidth,
+          pipes.sHeight,
+          pipesFloorX,
+          pipesFloorY,
+          pipes.sWidth,
+          pipes.sHeight
+        )
+      })
+    },
+    even: [{}],
+    refresh() {
+      const passed100frames = frames % 100 === 0
+      if (passed100frames) {
+        pipes.even.push({
+          x: canvas.width,
+          y: -150 * (Math.random() + 1)
+        })
+      }
+
+      pipes.even.forEach(function (even) {
+        even.x = even.x - 2
+
+        if (even.x + pipes.sWidth <= 0) {
+          pipes.even.shift()
+        }
+      })
+    }
+  }
+  return pipes
+}
+
 // floor (chão)
 function createFloor() {
   const floor = {
@@ -219,24 +292,30 @@ const screens = {
     ini() {
       global.flappyBird = createFlappyBird()
       global.floor = createFloor()
+      global.pipes = createPipes()
     },
     print() {
       background.print()
+      global.pipes.print()
       global.floor.print()
       global.flappyBird.print()
-      mensageGetReady.print()
+
+      //mensageGetReady.print()
     },
     click() {
       screenChange(screens.game)
     },
+
     refresh() {
       global.floor.refresh()
+      global.pipes.refresh()
     }
   }
 }
 screens.game = {
   print() {
     background.print()
+    global.pipes.print()
     global.floor.print()
     global.flappyBird.print()
   },
@@ -244,6 +323,7 @@ screens.game = {
     global.flappyBird.action()
   },
   refresh() {
+    global.pipes.refresh()
     global.flappyBird.refresh()
     global.floor.refresh()
   }
