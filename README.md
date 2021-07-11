@@ -21,4 +21,14 @@ The game Flappy bird using JavaScript. </p>
 
 
 <h1 align="center" ><img src="https://github.com/viniciussoares7/FlappyBird/blob/main/assets/images/game-screen-4.jpg" alt="game-screen-4"  width="300px" height="auto"/></h1>
+  
+  
+
+  
+<h1 align="center">REFERENCES:</h1>
+  <div align="center">
+<a href="https://github.com/omariosouto/flappy-bird-devsoutinho">Github</a></div>
+<div align="center">
+<a href="https://www.youtube.com/watch?v=jOAU81jdi-c&list=PLTcmLKdIkOWmeNferJ292VYKBXydGeDej">YOUTUBE</a>
+</div>
 
