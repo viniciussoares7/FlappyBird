@@ -10,6 +10,9 @@ sprites.src = './assets/images/sprites.png'
 const sprites2 = new Image()
 sprites2.src = './assets/images/sprites2.png'
 
+const sprites3 = new Image()
+sprites3.src = './assets/images/sprites3.png'
+
 const canvas = document.querySelector('canvas')
 const contexto = canvas.getContext('2d')
 
@@ -79,9 +82,8 @@ function createPipes() {
 
         const colorInterval = frames / 10
 
-        console.log(colorInterval)
         // Sky's pipe
-        if (colorInterval <= 200 || colorInterval >= 3000) {
+        if (colorInterval <= 150 || colorInterval >= 3000) {
           contexto.drawImage(
             sprites,
             pipes.sky.sx,
@@ -111,7 +113,7 @@ function createPipes() {
         const pipesFloorX = even.x
         const pipesFloorY = pipes.sHeight + spacePipes + yRandom
 
-        if (colorInterval <= 200 || colorInterval >= 3000) {
+        if (colorInterval <= 150 || colorInterval >= 3000) {
           contexto.drawImage(
             sprites,
             pipes.floor.sx,
@@ -342,17 +344,35 @@ function createFlappyBird() {
     print() {
       flappyBird.refreshActualFrame()
       const { spriteX, spriteY } = flappyBird.movements[flappyBird.actualFrame]
-      contexto.drawImage(
-        sprites,
-        spriteX,
-        spriteY,
-        flappyBird.sWidth,
-        flappyBird.sHeight,
-        flappyBird.dx,
-        flappyBird.dy,
-        flappyBird.dWidth,
-        flappyBird.dHeight
-      )
+
+      const colorInterval = frames / 10
+
+      // Sky's pipe
+      if (colorInterval <= 150 || colorInterval >= 3000) {
+        contexto.drawImage(
+          sprites,
+          spriteX,
+          spriteY,
+          flappyBird.sWidth,
+          flappyBird.sHeight,
+          flappyBird.dx,
+          flappyBird.dy,
+          flappyBird.dWidth,
+          flappyBird.dHeight
+        )
+      } else {
+        contexto.drawImage(
+          sprites3,
+          spriteX,
+          spriteY,
+          flappyBird.sWidth,
+          flappyBird.sHeight,
+          flappyBird.dx,
+          flappyBird.dy,
+          flappyBird.dWidth,
+          flappyBird.dHeight
+        )
+      }
     }
   }
   return flappyBird
