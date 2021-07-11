@@ -7,6 +7,9 @@ sound_hit.src = './assets/sound_efects/hit.wav'
 const sprites = new Image()
 sprites.src = './assets/images/sprites.png'
 
+const sprites2 = new Image()
+sprites2.src = './assets/images/sprites2.png'
+
 const canvas = document.querySelector('canvas')
 const contexto = canvas.getContext('2d')
 
@@ -69,44 +72,85 @@ function createPipes() {
     print() {
       pipes.even.forEach(function (even) {
         const yRandom = even.y
-        const spacePipes = 90
+        const spacePipes = 100
 
         const pipesSkyX = even.x
         const pipesSkyY = yRandom
+
+        const colorInterval = frames / 10
+
+        console.log(colorInterval)
         // Sky's pipe
-        contexto.drawImage(
-          sprites,
-          pipes.sky.sx,
-          pipes.sky.sy,
-          pipes.sWidth,
-          pipes.sHeight,
-          pipesSkyX,
-          pipesSkyY,
-          pipes.sWidth,
-          pipes.sHeight
-        )
+        if (colorInterval <= 200 || colorInterval >= 3000) {
+          contexto.drawImage(
+            sprites,
+            pipes.sky.sx,
+            pipes.sky.sy,
+            pipes.sWidth,
+            pipes.sHeight,
+            pipesSkyX,
+            pipesSkyY,
+            pipes.sWidth,
+            pipes.sHeight
+          )
+        } else {
+          contexto.drawImage(
+            sprites2,
+            pipes.sky.sx,
+            pipes.sky.sy,
+            pipes.sWidth,
+            pipes.sHeight,
+            pipesSkyX,
+            pipesSkyY,
+            pipes.sWidth,
+            pipes.sHeight
+          )
+        }
 
         // Floor's pipe
         const pipesFloorX = even.x
         const pipesFloorY = pipes.sHeight + spacePipes + yRandom
-        contexto.drawImage(
-          sprites,
-          pipes.floor.sx,
-          pipes.floor.sy,
-          pipes.sWidth,
-          pipes.sHeight,
-          pipesFloorX,
-          pipesFloorY,
-          pipes.sWidth,
-          pipes.sHeight
-        )
-        even.pipesSky = {
-          x: pipesSkyX,
-          y: pipes.sHeight + pipesSkyY
-        }
-        even.pipesFloor = {
-          x: pipesFloorX,
-          y: pipesFloorY
+
+        if (colorInterval <= 200 || colorInterval >= 3000) {
+          contexto.drawImage(
+            sprites,
+            pipes.floor.sx,
+            pipes.floor.sy,
+            pipes.sWidth,
+            pipes.sHeight,
+            pipesFloorX,
+            pipesFloorY,
+            pipes.sWidth,
+            pipes.sHeight
+          )
+          even.pipesSky = {
+            x: pipesSkyX,
+            y: pipes.sHeight + pipesSkyY
+          }
+          even.pipesFloor = {
+            x: pipesFloorX,
+            y: pipesFloorY
+          }
+        } else {
+          contexto.drawImage(
+            sprites2,
+            pipes.floor.sx,
+            pipes.floor.sy,
+            pipes.sWidth,
+            pipes.sHeight,
+            pipesFloorX,
+            pipesFloorY,
+            pipes.sWidth,
+            pipes.sHeight
+          )
+          even.pipesSky = {
+            x: pipesSkyX,
+            y: pipes.sHeight + pipesSkyY
+          }
+          even.pipesFloor = {
+            x: pipesFloorX,
+            y: pipesFloorY
+          }
         }
       })
     },
