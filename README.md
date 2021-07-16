@@ -5,7 +5,7 @@
   </div></h1> 
 <p align="center"> 
 The game Flappy bird using JavaScript. </p>
-
+<div align="center">
 deploy: https://viniciussoares7.github.io/FlappyBird/
 
 
