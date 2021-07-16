@@ -6,6 +6,7 @@
 <p align="center"> 
 The game Flappy bird using JavaScript. </p>
 
+deploy: https://viniciussoares7.github.io/FlappyBird/
 
 
 
